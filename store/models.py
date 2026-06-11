@@ -1,7 +1,13 @@
 from django.db import models
 
+class Promotion(models.Model):
+    description = models.CharField(max_length=250)
+    discount = models.FloatField()
+
+
 class Collection(models.Model):
     title = models.CharField(max_length=255)
+    fetured_product = models.ForeignKey('Product',on_delete=models.SET_NULL, null=True,related_name="+")
 
 class Product(models.Model):
     title = models.CharField(max_length=255)
@@ -12,8 +18,9 @@ class Product(models.Model):
     last_update = models.DateTimeField(auto_now=True)
     #so v mae on_delete to PROTECT cause if v accidentally deleted a collection we dont want it to delete the whole product
     collection = models.ForeignKey(Collection,on_delete=models.PROTECT)
+    promotions = models.ManyToManyField(Promotion)
 
-class Customer(models.model):
+class Customer(models.Model):
     #so y v did this is cause if v gonna change the default choice later v gonna be needing to modify in multipl places so creating a constant var helps
     MEMBERSHIP_BRONZE = "B"
     MEMBERSHIP_SILVER = "S"
