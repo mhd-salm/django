@@ -10,6 +10,7 @@ class Collection(models.Model):
     fetured_product = models.ForeignKey('Product',on_delete=models.SET_NULL, null=True,related_name="+")
 
 class Product(models.Model):
+    slug = models.SlugField()
     title = models.CharField(max_length=255)
     description = models.TextField()
     #assuming the max price gonna be 9999.99
@@ -78,6 +79,7 @@ class Address(models.Model):
 #   2. on_delete = what happens when we delete the parent class(customer)..so there are multiple things but we added "CASCADE" which deletes the child class when the parent is deleted
 #   3. primary_key = we gonna make it the primary_key.
 #      if not then djangop gonna crete an id field for each address and it gonna become an OneTOMany realationship
-    
+    zip = models.CharField(max_length=20,null=True)
+
 
 #   we dont have to create a reverse relation on the customer class django gonna create it for uss
